@@ -1,1 +1,510 @@
-Hola
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Control de Préstamos | FIM UAS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+    
+    <style>
+        :root {
+            --uas-blue: #003366;
+            --uas-blue-dark: #001f3f;
+            --uas-gold: #b38e5d;
+            --uas-gold-light: #dfc5a0;
+            --bg-body: #f4f7f9;
+            --bg-surface: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --border-color: #e5e7eb;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --radius-md: 8px;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body { background-color: var(--bg-body); color: var(--text-main); height: 100vh; display: flex; flex-direction: column; }
+
+        /* --- HEADER NAVBAR --- */
+        .navbar {
+            background-color: var(--uas-blue);
+            color: white;
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-md);
+            border-bottom: 3px solid var(--uas-gold);
+            z-index: 10;
+        }
+
+        .brand { display: flex; align-items: center; gap: 12px; }
+        .brand-icon { background: var(--uas-gold); color: var(--uas-blue); padding: 8px; border-radius: 8px; font-weight: bold; font-size: 14px; letter-spacing: 1px;}
+        .brand-text h1 { font-size: 16px; font-weight: 600; letter-spacing: 0.5px; }
+        .brand-text p { font-size: 11px; color: #cbd5e1; }
+        
+        .user-profile { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 500;}
+        .avatar { width: 32px; height: 32px; background: var(--uas-blue-dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid var(--uas-gold); }
+
+        /* --- MAIN CONTAINER --- */
+        .main-content { padding: 24px; flex: 1; overflow-y: auto; }
+        
+        .page-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; flex-wrap: wrap; gap: 16px; }
+        .page-title h2 { font-size: 24px; font-weight: 700; color: var(--uas-blue); }
+        .page-title p { font-size: 14px; color: var(--text-muted); margin-top: 4px; }
+
+        /* --- TOOLBAR --- */
+        .toolbar { display: flex; gap: 12px; align-items: center; }
+        
+        .search-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .search-box .material-symbols-outlined { position: absolute; left: 10px; color: var(--text-muted); font-size: 20px; }
+        .search-box input {
+            padding: 10px 10px 10px 36px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            width: 280px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s;
+        }
+        .search-box input:focus { border-color: var(--uas-blue); box-shadow: 0 0 0 3px rgba(0,51,102,0.1); }
+
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 16px; border: none; border-radius: var(--radius-md);
+            font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s;
+        }
+        .btn-primary { background-color: var(--uas-blue); color: white; }
+        .btn-primary:hover { background-color: var(--uas-blue-dark); }
+        .btn-secondary { background-color: white; border: 1px solid var(--border-color); color: var(--text-main); }
+        .btn-secondary:hover { background-color: #f8fafc; border-color: #cbd5e1; }
+        .btn-danger { color: var(--danger); background: #fef2f2; border: 1px solid #fecaca; padding: 6px 10px; }
+        .btn-danger:hover { background: #fee2e2; }
+
+        /* --- TABLE CARD --- */
+        .card { background: var(--bg-surface); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); overflow: hidden; }
+        
+        .table-responsive { width: 100%; overflow-x: auto; }
+        
+        table { width: 100%; border-collapse: collapse; text-align: left; white-space: nowrap; }
+        thead { background-color: #f8fafc; border-bottom: 1px solid var(--border-color); }
+        th { padding: 14px 16px; font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        td { padding: 14px 16px; font-size: 14px; border-bottom: 1px solid var(--border-color); vertical-align: middle; }
+        tbody tr:hover { background-color: #f1f5f9; }
+
+        /* Badges */
+        .badge { padding: 4px 8px; border-radius: 999px; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; }
+        .badge-alumno { background-color: #e0f2fe; color: #0284c7; }
+        .badge-profesor { background-color: #fef08a; color: #854d0e; }
+        
+        .status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+        .status-prestado { color: var(--warning); font-weight: 500; }
+        .status-prestado .status-dot { background-color: var(--warning); }
+        .status-devuelto { color: var(--success); font-weight: 500; }
+        .status-devuelto .status-dot { background-color: var(--success); }
+
+        .items-list { font-size: 12px; color: var(--text-muted); background: #f1f5f9; padding: 4px 8px; border-radius: 4px; display: inline-block; }
+
+        /* --- MODAL (FORMULARIO) --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(2px);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 100; opacity: 0; visibility: hidden; transition: all 0.3s;
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        
+        .modal {
+            background: var(--bg-surface); width: 100%; max-width: 800px;
+            border-radius: 12px; box-shadow: var(--shadow-lg);
+            transform: translateY(20px); transition: all 0.3s;
+            max-height: 90vh; display: flex; flex-direction: column;
+        }
+        .modal-overlay.active .modal { transform: translateY(0); }
+
+        .modal-header { padding: 20px 24px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h3 { font-size: 18px; color: var(--uas-blue); }
+        .btn-close { background: none; border: none; font-size: 24px; color: var(--text-muted); cursor: pointer; }
+        .btn-close:hover { color: var(--danger); }
+
+        .modal-body { padding: 24px; overflow-y: auto; }
+        
+        .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 24px; }
+        .form-section-title { grid-column: 1 / -1; font-size: 13px; font-weight: 600; color: var(--uas-gold); text-transform: uppercase; margin-bottom: -8px; margin-top: 8px; border-bottom: 1px solid var(--border-color); padding-bottom: 4px;}
+        
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group.full-width { grid-column: 1 / -1; }
+        .form-group label { font-size: 13px; font-weight: 500; color: var(--text-main); }
+        .form-group input, .form-group select, .form-group textarea {
+            padding: 10px; border: 1px solid var(--border-color); border-radius: var(--radius-md);
+            font-size: 14px; outline: none; font-family: 'Inter', sans-serif;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--uas-blue); }
+
+        .checkbox-group { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px; }
+        .checkbox-label { display: flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer; }
+        .checkbox-label input { width: 16px; height: 16px; accent-color: var(--uas-blue); }
+
+        .modal-footer { padding: 16px 24px; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; gap: 12px; background: #f8fafc; border-radius: 0 0 12px 12px;}
+
+        /* Empty state */
+        .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+        .empty-state span.material-symbols-outlined { font-size: 48px; color: #cbd5e1; margin-bottom: 16px; }
+
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="brand">
+            <div class="brand-icon">FIM</div>
+            <div class="brand-text">
+                <h1>Sistema de Bitácora</h1>
+                <p>Centro de Cómputo - Peña Nava Alan Abraham</p>
+            </div>
+        </div>
+        <div class="user-profile">
+            <span>Admin Cómputo</span>
+            <div class="avatar"><span class="material-symbols-outlined" style="font-size: 18px;">person</span></div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <div class="page-title">
+                <h2>Control de Préstamos de Equipo</h2>
+                <p>Gestiona y monitorea los recursos tecnológicos de la facultad.</p>
+            </div>
+            <div class="toolbar">
+                <div class="search-box">
+                    <span class="material-symbols-outlined">search</span>
+                    <input type="text" id="searchInput" placeholder="Buscar por nombre, matrícula o equipo..." onkeyup="filterTable()">
+                </div>
+                <button class="btn btn-secondary" onclick="exportCSV()">
+                    <span class="material-symbols-outlined">download</span> Exportar
+                </button>
+                <button class="btn btn-primary" onclick="openModal()">
+                    <span class="material-symbols-outlined">add</span> Nuevo Préstamo
+                </button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="table-responsive">
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Solicitante</th>
+                            <th>Matrícula / Grupo</th>
+                            <th>Destino (Aula)</th>
+                            <th>Equipos / Accesorios</th>
+                            <th>Detalle de Tiempos</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        </tbody>
+                </table>
+            </div>
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <span class="material-symbols-outlined">inventory_2</span>
+                <h3>No hay registros encontrados</h3>
+                <p>Haz clic en "Nuevo Préstamo" para comenzar a registrar.</p>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Registrar Nuevo Préstamo</h3>
+                <button class="btn-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="loanForm" onsubmit="saveRecord(event)">
+                    <div class="form-grid">
+                        
+                        <div class="form-section-title">Datos del Solicitante</div>
+                        
+                        <div class="form-group">
+                            <label>Nombre Completo *</label>
+                            <input type="text" id="f_nombre" required placeholder="Ej. Juan Pérez">
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo de Usuario *</label>
+                            <select id="f_tipo" required>
+                                <option value="Alumno">Alumno</option>
+                                <option value="Profesor">Profesor</option>
+                                <option value="Administrativo">Administrativo</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Matrícula / No. Empleado *</label>
+                            <input type="text" id="f_matricula" required placeholder="Ej. 12345678">
+                        </div>
+                        <div class="form-group">
+                            <label>Carrera y Grupo</label>
+                            <input type="text" id="f_grupo" placeholder="Ej. Ing. Software 3-01">
+                        </div>
+
+                        <div class="form-section-title">Detalles del Préstamo</div>
+                        
+                        <div class="form-group">
+                            <label>Equipo Principal Solicitado *</label>
+                            <input type="text" id="f_equipo" required placeholder="Ej. Laptop Dell #14, Proyector Epson #2">
+                        </div>
+                        <div class="form-group">
+                            <label>Aula / Destino *</label>
+                            <input type="text" id="f_aula" required placeholder="Ej. CC-01, Aula 15">
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label>Accesorios Incluidos</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label"><input type="checkbox" id="chk_c" value="Cargador"> Cargador (C)</label>
+                                <label class="checkbox-label"><input type="checkbox" id="chk_g" value="Gabinete"> Gabinete (G)</label>
+                                <label class="checkbox-label"><input type="checkbox" id="chk_s" value="Mouse/Teclado"> Periféricos (S)</label>
+                                <label class="checkbox-label"><input type="checkbox" id="chk_ip" value="Cable Video"> Cable Video (IP)</label>
+                                <label class="checkbox-label"><input type="checkbox" id="chk_in" value="Extensión"> Extensión (IN)</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Hora de Préstamo *</label>
+                            <input type="time" id="f_hora_p" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Hora Límite/Entrega</label>
+                            <input type="time" id="f_hora_e">
+                        </div>
+
+                        <div class="form-section-title">Control y Estado</div>
+
+                        <div class="form-group">
+                            <label>Estado Actual</label>
+                            <select id="f_estado">
+                                <option value="Prestado">Activo (Prestado)</option>
+                                <option value="Devuelto">Finalizado (Devuelto)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Condición al Entregar</label>
+                            <select id="f_condicion">
+                                <option value="Bueno">Bueno</option>
+                                <option value="Regular">Regular</option>
+                                <option value="Malo">Malo / Con daños</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label>Observaciones / Detalles de daño</label>
+                            <textarea id="f_obs" rows="2" placeholder="Opcional. Registre rayaduras, fallas de software, etc."></textarea>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" id="submitBtn" style="display:none;"></button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+                <button class="btn btn-primary" onclick="document.getElementById('submitBtn').click()">Guardar Registro</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Array principal de datos (Actúa como nuestra Base de Datos en memoria)
+        let records = [];
+        let currentId = 1;
+
+        // Elementos del DOM
+        const modal = document.getElementById('modalOverlay');
+        const form = document.getElementById('loanForm');
+        const tableBody = document.getElementById('tableBody');
+        const emptyState = document.getElementById('emptyState');
+
+        // Pre-llenar hora actual al abrir form
+        function setCurrentTime() {
+            const now = new Date();
+            const timeString = now.toTimeString().slice(0,5);
+            document.getElementById('f_hora_p').value = timeString;
+        }
+
+        function openModal() {
+            form.reset();
+            setCurrentTime();
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+        }
+
+        function saveRecord(e) {
+            e.preventDefault(); // Evitar recarga de página
+
+            // Recolectar accesorios seleccionados
+            const accesorios = [];
+            if(document.getElementById('chk_c').checked) accesorios.push('C');
+            if(document.getElementById('chk_g').checked) accesorios.push('G');
+            if(document.getElementById('chk_s').checked) accesorios.push('S');
+            if(document.getElementById('chk_ip').checked) accesorios.push('IP');
+            if(document.getElementById('chk_in').checked) accesorios.push('IN');
+
+            const newRecord = {
+                id: currentId++,
+                fecha: new Date().toLocaleDateString(),
+                nombre: document.getElementById('f_nombre').value,
+                tipo: document.getElementById('f_tipo').value,
+                matricula: document.getElementById('f_matricula').value,
+                grupo: document.getElementById('f_grupo').value || 'N/A',
+                equipo: document.getElementById('f_equipo').value,
+                aula: document.getElementById('f_aula').value,
+                accesorios: accesorios.join(', ') || 'Ninguno',
+                horaP: document.getElementById('f_hora_p').value,
+                horaE: document.getElementById('f_hora_e').value || '--:--',
+                estado: document.getElementById('f_estado').value,
+                condicion: document.getElementById('f_condicion').value,
+                obs: document.getElementById('f_obs').value
+            };
+
+            records.push(newRecord);
+            closeModal();
+            renderTable();
+        }
+
+        function deleteRecord(id) {
+            if(confirm('¿Estás seguro de eliminar este registro?')) {
+                records = records.filter(r => r.id !== id);
+                renderTable();
+            }
+        }
+
+        function toggleStatus(id) {
+            const record = records.find(r => r.id === id);
+            if(record) {
+                record.estado = record.estado === 'Prestado' ? 'Devuelto' : 'Prestado';
+                // Si se marca como devuelto, auto-llenar hora de entrega
+                if(record.estado === 'Devuelto' && record.horaE === '--:--') {
+                    const now = new Date();
+                    record.horaE = now.toTimeString().slice(0,5);
+                }
+                renderTable();
+            }
+        }
+
+        function renderTable(data = records) {
+            tableBody.innerHTML = '';
+            
+            if(data.length === 0) {
+                emptyState.style.display = 'block';
+                document.getElementById('dataTable').style.display = 'none';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            document.getElementById('dataTable').style.display = 'table';
+
+            data.forEach(r => {
+                const tr = document.createElement('tr');
+                
+                // Configurar estilos visuales
+                const badgeClass = r.tipo === 'Alumno' ? 'badge-alumno' : 'badge-profesor';
+                const statusClass = r.estado === 'Prestado' ? 'status-prestado' : 'status-devuelto';
+                const statusIcon = r.estado === 'Prestado' ? 'timer' : 'check_circle';
+
+                tr.innerHTML = `
+                    <td style="font-weight:600; color:var(--text-muted)">#${String(r.id).padStart(3, '0')}</td>
+                    <td>
+                        <div style="font-weight:500">${r.nombre}</div>
+                        <span class="badge ${badgeClass}" style="margin-top:4px; display:inline-block">${r.tipo}</span>
+                    </td>
+                    <td>
+                        <div><span class="material-symbols-outlined" style="font-size:14px; vertical-align:middle; color:#94a3b8">badge</span> ${r.matricula}</div>
+                        <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">${r.grupo}</div>
+                    </td>
+                    <td><strong style="color:var(--uas-blue)">${r.aula}</strong></td>
+                    <td>
+                        <div style="font-weight:500; color:#0f172a;">${r.equipo}</div>
+                        <div class="items-list" style="margin-top:4px" title="Accesorios">+[ ${r.accesorios} ]</div>
+                    </td>
+                    <td>
+                        <div style="font-size:13px"><span class="material-symbols-outlined" style="font-size:14px; vertical-align:middle">calendar_today</span> ${r.fecha}</div>
+                        <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">
+                            Salida: <b>${r.horaP}</b> | Ent: <b>${r.horaE}</b>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="${statusClass} cursor-pointer" onclick="toggleStatus(${r.id})" style="cursor:pointer; display:flex; align-items:center; gap:4px;" title="Clic para cambiar estado">
+                            <span class="status-dot"></span>${r.estado}
+                        </div>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" onclick="deleteRecord(${r.id})" title="Eliminar registro">
+                            <span class="material-symbols-outlined" style="font-size:18px;">delete</span>
+                        </button>
+                    </td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+
+        // Buscador dinámico
+        function filterTable() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = records.filter(r => 
+                r.nombre.toLowerCase().includes(query) || 
+                r.matricula.toLowerCase().includes(query) ||
+                r.equipo.toLowerCase().includes(query) ||
+                r.aula.toLowerCase().includes(query)
+            );
+            renderTable(filtered);
+        }
+
+        // Exportar a CSV
+        function exportCSV() {
+            if(records.length === 0) return alert('No hay datos para exportar');
+            
+            const headers = ['ID','Fecha','Nombre','Tipo','Matricula','Grupo','Equipo','Accesorios','Aula','Hora Salida','Hora Entrega','Estado','Condicion','Observaciones'];
+            let csv = headers.join(',') + '\n';
+            
+            records.forEach(r => {
+                const row = [r.id, r.fecha, r.nombre, r.tipo, r.matricula, r.grupo, r.equipo, r.accesorios, r.aula, r.horaP, r.horaE, r.estado, r.condicion, r.obs];
+                // Limpiar comas internas para que no rompan el CSV
+                const safeRow = row.map(val => `"${String(val).replace(/"/g, '""')}"`);
+                csv += safeRow.join(',') + '\n';
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'bitacora_prestamos_uas.csv';
+            link.click();
+        }
+
+        // Datos de ejemplo para que no se vea vacío inicialmente
+        records.push({
+            id: currentId++, fecha: new Date().toLocaleDateString(), nombre: 'Carlos Ruiz', tipo: 'Alumno', matricula: '1802345', grupo: 'Ing. Software 3-01', equipo: 'Laptop Dell #14', aula: 'CC-02', accesorios: 'C, S', horaP: '08:00', horaE: '--:--', estado: 'Prestado', condicion: 'Bueno', obs: ''
+        });
+        records.push({
+            id: currentId++, fecha: new Date().toLocaleDateString(), nombre: 'Dra. María González', tipo: 'Profesor', matricula: '45098', grupo: 'N/A', equipo: 'Proyector Epson #05', aula: 'Aula 20', accesorios: 'IP, IN', horaP: '09:15', horaE: '11:30', estado: 'Devuelto', condicion: 'Bueno', obs: ''
+        });
+
+        // Inicializar tabla
+        renderTable();
+    </script>
+</body>
+</html>
