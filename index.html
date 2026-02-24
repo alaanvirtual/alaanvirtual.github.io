@@ -3,158 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bitácora FIM UAS - Formato Oficial</title>
+    <title>Bitácora FIM UAS - Dinámica</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <style>
-        :root {
-            --uas-blue: #003366;
-            --uas-gold: #b38e5d;
+        :root { --uas-blue: #003366; --uas-gold: #b38e5d; }
+        body { font-family: 'Inter', sans-serif; background: #f3f4f6; margin: 0; padding: 20px; }
+        
+        .top-bar { 
+            max-width: 900px; margin: 0 auto 20px; display: flex; 
+            justify-content: space-between; align-items: center; 
         }
 
-        body { font-family: 'Inter', sans-serif; background: #e5e7eb; padding: 20px; }
-        
-        /* Contenedor principal de la hoja */
         .bitacora-container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            padding: 30px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            max-width: 900px; margin: 0 auto; background: white;
+            padding: 30px; box-shadow: 0 0 20px rgba(0,0,0,0.1); min-height: 100vh;
         }
 
         .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid black; padding-bottom: 10px; margin-bottom: 20px; }
-        .header h1 { font-size: 18px; text-transform: uppercase; margin: 0; }
+        
+        /* Grid de vales */
+        .grid-vales { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 
-        /* Cuadrícula de vales (Parecido a la imagen) */
-        .grid-vales {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
+        .vale-card { border: 2px solid #000; border-radius: 8px; overflow: hidden; position: relative; }
+        .vale-header { background: black; color: white; padding: 5px 10px; display: flex; justify-content: space-between; font-size: 11px; }
+        .vale-body { padding: 10px; font-size: 11px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        
+        .form-line { border-bottom: 1px solid #ccc; font-weight: bold; min-height: 15px; margin-bottom: 4px; color: var(--uas-blue); }
+        .label { font-size: 10px; color: #666; font-weight: bold; text-transform: uppercase; }
 
-        /* Diseño del "Vale" individual */
-        .vale-card {
-            border: 2px solid #000;
-            border-radius: 8px;
-            overflow: hidden;
-        }
+        .accesorios-grid { grid-column: span 2; display: flex; gap: 8px; background: #f9fafb; padding: 5px; border-radius: 4px; justify-content: space-around; border: 1px solid #eee; }
+        .checkbox-item { display: flex; align-items: center; gap: 2px; }
+        
+        .btn { padding: 10px 15px; border-radius: 6px; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: bold; }
+        .btn-add { background: var(--uas-blue); color: white; }
+        .btn-delete { position: absolute; top: 2px; right: 2px; background: red; color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; padding: 0; justify-content: center; opacity: 0.3; }
+        .btn-delete:hover { opacity: 1; }
 
-        .vale-header {
-            background: black;
-            color: white;
-            padding: 5px 10px;
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .vale-body {
-            padding: 10px;
-            font-size: 11px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-        }
-
-        .form-line { border-bottom: 1px solid #ccc; padding: 2px 0; margin-bottom: 5px; height: 18px;}
-        .label { font-weight: bold; color: #444; }
-
-        /* Checkboxes tipo (C, G, S, IP, IN) como en tu imagen */
-        .accesorios-grid {
-            grid-column: span 2;
-            display: flex;
-            gap: 10px;
-            background: #f3f4f6;
-            padding: 5px;
-            border-radius: 4px;
-            justify-content: space-around;
-        }
-
-        .checkbox-item { display: flex; align-items: center; gap: 3px; }
-        .checkbox-item input { width: 12px; height: 12px; }
-
-        .firma-box {
-            grid-column: span 2;
-            border-top: 1px dashed #000;
-            margin-top: 5px;
-            padding-top: 5px;
-            text-align: center;
-            font-size: 10px;
-            color: #666;
-        }
-
-        /* Sidebar simple para que mantengas la navegación */
-        .menu-flotante { position: fixed; left: 10px; top: 10px; background: var(--uas-blue); color: white; padding: 10px; border-radius: 5px; font-size: 12px; }
+        /* Modal / Formulario */
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 100; }
+        .modal.active { display: flex; }
+        .modal-content { background: white; padding: 25px; border-radius: 12px; width: 400px; }
+        .input-group { margin-bottom: 12px; }
+        .input-group label { display: block; font-size: 12px; margin-bottom: 4px; }
+        .input-group input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
     </style>
 </head>
 <body>
 
-<div class="menu-flotante">Módulos FIM: Préstamos | Alumnos | Equipos</div>
+<div class="top-bar">
+    <h2 style="color: var(--uas-blue); margin: 0;">FIM UAS - Control Digital</h2>
+    <button class="btn btn-add" onclick="toggleModal(true)">
+        <span class="material-symbols-outlined">add_circle</span> Nuevo Vale
+    </button>
+</div>
 
 <div class="bitacora-container">
     <div class="header">
         <div>
-            <h1>Bitácora de Préstamo de Equipos</h1>
-            <small>FACULTAD DE INGENIERÍA MOCHIS - UAS</small>
+            <h1 style="font-size: 18px; margin: 0;">Bitácora de Préstamo de Equipos</h1>
+            <small>FACULTAD DE INGENIERÍA MOCHIS</small>
         </div>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Uas_logo.png" alt="Logo UAS" width="50">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Uas_logo.png" width="40">
     </div>
 
     <div class="grid-vales" id="gridVales">
-        <div class="vale-card">
-            <div class="vale-header">
-                <span>Carrera: Ing. Software</span>
-                <span>No. de vale: 001</span>
-            </div>
-            <div class="vale-body">
-                <div><span class="label">Nombre:</span> <div class="form-line">Alan Abraham</div></div>
-                <div><span class="label">F. de entrega:</span> <div class="form-line">24/02/2026</div></div>
-                
-                <div class="accesorios-grid">
-                    <div class="checkbox-item"><input type="checkbox" checked> C</div>
-                    <div class="checkbox-item"><input type="checkbox"> G</div>
-                    <div class="checkbox-item"><input type="checkbox" checked> S</div>
-                    <div class="checkbox-item"><input type="checkbox"> IP</div>
-                    <div class="checkbox-item"><input type="checkbox"> IN</div>
-                </div>
-
-                <div><span class="label">Fecha:</span> <div class="form-line">24/02/2026</div></div>
-                <div><span class="label">Hora de entrega:</span> <div class="form-line">12:00 PM</div></div>
-                <div><span class="label">Equipo:</span> <div class="form-line">Laptop Dell #01</div></div>
-                <div><span class="label">Hora de recepción:</span> <div class="form-line">--:--</div></div>
-                
-                <div class="firma-box">FIRMA DEL SOLICITANTE</div>
-            </div>
-        </div>
-
-        <div class="vale-card">
-            <div class="vale-header">
-                <span>Carrera: Ing. Procesos</span>
-                <span>No. de vale: 002</span>
-            </div>
-            <div class="vale-body">
-                <div><span class="label">Nombre:</span> <div class="form-line">...........................</div></div>
-                <div><span class="label">F. de entrega:</span> <div class="form-line">...........................</div></div>
-                
-                <div class="accesorios-grid">
-                    <div class="checkbox-item"><input type="checkbox"> C</div>
-                    <div class="checkbox-item"><input type="checkbox"> G</div>
-                    <div class="checkbox-item"><input type="checkbox"> S</div>
-                    <div class="checkbox-item"><input type="checkbox"> IP</div>
-                    <div class="checkbox-item"><input type="checkbox"> IN</div>
-                </div>
-
-                <div><span class="label">Fecha:</span> <div class="form-line"></div></div>
-                <div><span class="label">Hora de entrega:</span> <div class="form-line"></div></div>
-                <div><span class="label">Equipo:</span> <div class="form-line"></div></div>
-                <div><span class="label">Hora de recepción:</span> <div class="form-line"></div></div>
-                
-                <div class="firma-box">FIRMA DEL SOLICITANTE</div>
-            </div>
-        </div>
         </div>
 </div>
 
+<div class="modal" id="modalRegistro">
+    <div class="modal-content">
+        <h3>Registrar Préstamo</h3>
+        <form id="formVale">
+            <div class="input-group"><label>Nombre del Solicitante</label><input type="text" id="v_nombre" required></div>
+            <div class="input-group"><label>Carrera</label><input type="text" id="v_carrera" required></div>
+            <div class="input-group"><label>Equipo</label><input type="text" id="v_equipo" required></div>
+            <div style="margin: 10px 0;">
+                <label style="font-size: 12px;">Accesorios:</label><br>
+                <input type="checkbox" id="c_c"> C | <input type="checkbox" id="c_g"> G | <input type="checkbox" id="c_s"> S | <input type="checkbox" id="c_ip"> IP
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button type="button" class="btn" style="background:#ccc" onclick="toggleModal(false)">Cancelar</button>
+                <button type="submit" class="btn btn-add">Guardar Vale</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    let vales = JSON.parse(localStorage.getItem('vales_fim')) || [];
+
+    function toggleModal(show) {
+        document.getElementById('modalRegistro').classList.toggle('active', show);
+    }
+
+    document.getElementById('formVale').onsubmit = function(e) {
+        e.preventDefault();
+        const nuevoVale = {
+            id: Date.now(),
+            nombre: document.getElementById('v_nombre').value,
+            carrera: document.getElementById('v_carrera').value,
+            equipo: document.getElementById('v_equipo').value,
+            fecha: new Date().toLocaleDateString(),
+            hora: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+            c: document.getElementById('c_c').checked,
+            g: document.getElementById('c_g').checked,
+            s: document.getElementById('c_s').checked,
+            ip: document.getElementById('c_ip').checked
+        };
+        vales.push(nuevoVale);
+        saveAndRender();
+        toggleModal(false);
+        this.reset();
+    };
+
+    function eliminarVale(id) {
+        vales = vales.filter(v => v.id !== id);
+        saveAndRender();
+    }
+
+    function saveAndRender() {
+        localStorage.setItem('vales_fim', JSON.stringify(vales));
+        const grid = document.getElementById('gridVales');
+        grid.innerHTML = vales.map(v => `
+            <div class="vale-card">
+                <button class="btn-delete" onclick="eliminarVale(${v.id})">×</button>
+                <div class="vale-header">
+                    <span>${v.carrera}</span>
+                    <span>Vale #${String(v.id).slice(-3)}</span>
+                </div>
+                <div class="vale-body">
+                    <div><span class="label">Nombre:</span><div class="form-line">${v.nombre}</div></div>
+                    <div><span class="label">F. Entrega:</span><div class="form-line">${v.fecha}</div></div>
+                    <div class="accesorios-grid">
+                        <span>C ${v.c?'☑':'☐'}</span><span>G ${v.g?'☑':'☐'}</span>
+                        <span>S ${v.s?'☑':'☐'}</span><span>IP ${v.ip?'☑':'☐'}</span>
+                    </div>
+                    <div><span class="label">Hora Salida:</span><div class="form-line">${v.hora}</div></div>
+                    <div><span class="label">Equipo:</span><div class="form-line">${v.equipo}</div></div>
+                    <div style="grid-column: span 2; text-align:center; border-top:1px solid #eee; padding-top:5px; font-size:8px; color:#999">FIRMA DIGITAL</div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    saveAndRender();
+</script>
 </body>
 </html>
