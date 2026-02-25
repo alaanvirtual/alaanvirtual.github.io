@@ -4,474 +4,375 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bitácora de Préstamo de Equipos — FIM</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0d0f14;
-    --surface: #161921;
-    --surface2: #1e2330;
-    --border: #2a3045;
-    --accent: #e8a020;
-    --accent2: #c46a10;
-    --text: #e8ecf5;
-    --muted: #8892a8;
-    --danger: #e05252;
-    --success: #52c47a;
-    --info: #4fa8e8;
-  }
   * { box-sizing: border-box; margin: 0; padding: 0; }
+
   body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
+    background: #f5f6fa;
+    color: #2d3436;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
     min-height: 100vh;
   }
 
   /* HEADER */
   header {
-    background: linear-gradient(135deg, #0a0c10 0%, #1a1f2e 100%);
-    border-bottom: 3px solid var(--accent);
-    padding: 0 2rem;
+    background: #2c3e50;
+    color: white;
+    padding: 0 1.5rem;
+    height: 60px;
     display: flex;
     align-items: center;
-    gap: 1.5rem;
-    height: 80px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+    gap: 1rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   }
-  .logo-block {
-    display: flex;
-    flex-direction: column;
-    line-height: 1;
-  }
+
   .logo-block .inst {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.55rem;
-    color: var(--accent);
-    letter-spacing: 2px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #f39c12;
   }
   .logo-block .sub {
     font-size: 0.65rem;
-    color: var(--muted);
-    letter-spacing: 1px;
+    color: #b2bec3;
+    letter-spacing: 0.5px;
     text-transform: uppercase;
   }
-  .header-sep { width: 2px; height: 40px; background: var(--border); }
+
+  .header-sep { width: 1px; height: 32px; background: #4a5568; }
+
   .page-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.4rem;
-    letter-spacing: 3px;
-    color: var(--text);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #dfe6e9;
   }
-  .header-right { margin-left: auto; display: flex; gap: 1rem; align-items: center; }
+
+  .header-right { margin-left: auto; display: flex; gap: 0.6rem; }
+
   .stat-pill {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 0.3rem 0.8rem;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 4px;
+    padding: 0.25rem 0.7rem;
     font-size: 0.78rem;
+    color: #dfe6e9;
     display: flex;
     align-items: center;
     gap: 0.4rem;
   }
-  .stat-pill .dot {
-    width: 8px; height: 8px; border-radius: 50%;
-  }
-  .dot-green { background: var(--success); box-shadow: 0 0 6px var(--success); }
-  .dot-yellow { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+  .dot { width: 7px; height: 7px; border-radius: 50%; }
+  .dot-green  { background: #00b894; }
+  .dot-yellow { background: #f39c12; }
 
   /* LAYOUT */
-  .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+  .container { max-width: 1300px; margin: 0 auto; padding: 1.5rem; }
 
   /* TABS */
   .tabs {
     display: flex;
-    gap: 0.25rem;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 0.3rem;
-    margin-bottom: 2rem;
-    width: fit-content;
+    gap: 2px;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #dfe6e9;
   }
+
   .tab {
-    padding: 0.55rem 1.5rem;
-    border-radius: 9px;
+    padding: 0.55rem 1.2rem;
     border: none;
     background: transparent;
-    color: var(--muted);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
+    color: #636e72;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.88rem;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s;
-    letter-spacing: 0.5px;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.15s;
   }
-  .tab.active {
-    background: var(--accent);
-    color: #0d0f14;
-    font-weight: 600;
-  }
-  .tab:not(.active):hover { color: var(--text); background: var(--surface2); }
+  .tab.active { color: #2980b9; border-bottom-color: #2980b9; }
+  .tab:not(.active):hover { color: #2d3436; background: #f0f0f0; border-radius: 4px 4px 0 0; }
 
   /* PANELS */
   .panel { display: none; }
-  .panel.active { display: block; animation: fadeUp 0.3s ease; }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  .panel.active { display: block; }
 
-  /* FORM CARD */
-  .form-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 2rem;
-    margin-bottom: 2rem;
-  }
-  .form-card h2 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.4rem;
-    letter-spacing: 2px;
-    color: var(--accent);
+  /* CARDS */
+  .card {
+    background: white;
+    border: 1px solid #dfe6e9;
+    border-radius: 6px;
+    padding: 1.5rem;
     margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-  .form-card h2::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
   }
 
+  .card h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 2px solid #f39c12;
+    display: inline-block;
+  }
+
+  /* FORM */
   .form-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1rem 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
   }
-  .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+
+  .form-group { display: flex; flex-direction: column; gap: 0.3rem; }
+
   .form-group label {
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--muted);
-    font-weight: 600;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #636e72;
   }
+
   .form-group input,
   .form-group select,
   .form-group textarea {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    padding: 0.6rem 0.9rem;
-    transition: border-color 0.2s;
+    background: #fff;
+    border: 1px solid #b2bec3;
+    border-radius: 4px;
+    color: #2d3436;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.88rem;
+    padding: 0.55rem 0.8rem;
+    transition: border-color 0.15s;
     outline: none;
   }
   .form-group input:focus,
   .form-group select:focus,
   .form-group textarea:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(232,160,32,0.12);
+    border-color: #2980b9;
+    box-shadow: 0 0 0 2px rgba(41,128,185,0.1);
   }
-  .form-group select option { background: var(--surface2); }
-  .form-group textarea { resize: vertical; min-height: 80px; }
+  .form-group textarea { resize: vertical; min-height: 75px; }
 
-  .form-row { grid-column: 1 / -1; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+  .form-row { grid-column: 1/-1; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
 
-  .checkbox-group {
-    display: flex;
-    gap: 1.5rem;
-    align-items: center;
-  }
+  .checkbox-group { display: flex; gap: 1.2rem; }
   .checkbox-group label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.88rem;
-    color: var(--text);
-    cursor: pointer;
-    text-transform: none;
-    letter-spacing: 0;
-    font-weight: 400;
+    display: flex; align-items: center; gap: 0.4rem;
+    font-size: 0.88rem; color: #2d3436; cursor: pointer; font-weight: 400;
   }
-  .checkbox-group input[type=radio],
-  .checkbox-group input[type=checkbox] {
-    width: 16px; height: 16px;
-    accent-color: var(--accent);
-    padding: 0;
-  }
+  .checkbox-group input { accent-color: #2980b9; width: 15px; height: 15px; padding: 0; }
 
   /* BUTTONS */
   .btn {
-    padding: 0.65rem 1.6rem;
-    border-radius: 8px;
-    border: none;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    letter-spacing: 0.5px;
-  }
-  .btn-primary {
-    background: var(--accent);
-    color: #0d0f14;
-  }
-  .btn-primary:hover { background: #f0b030; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(232,160,32,0.3); }
-  .btn-outline {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--muted);
-  }
-  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
-  .btn-danger {
-    background: transparent;
-    border: 1px solid var(--danger);
-    color: var(--danger);
-    padding: 0.4rem 0.8rem;
-    font-size: 0.8rem;
-  }
-  .btn-danger:hover { background: var(--danger); color: white; }
-  .btn-success {
-    background: transparent;
-    border: 1px solid var(--success);
-    color: var(--success);
-    padding: 0.4rem 0.8rem;
-    font-size: 0.8rem;
-  }
-  .btn-success:hover { background: var(--success); color: #0d0f14; }
-  .btn-info {
-    background: transparent;
-    border: 1px solid var(--info);
-    color: var(--info);
-    padding: 0.4rem 0.8rem;
-    font-size: 0.8rem;
-  }
-  .btn-info:hover { background: var(--info); color: #0d0f14; }
-
-  /* SEARCH / FILTERS */
-  .filters {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 1.5rem;
-  }
-  .search-box {
-    flex: 1;
-    min-width: 240px;
-    position: relative;
-  }
-  .search-box input {
-    width: 100%;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    padding: 0.6rem 0.9rem 0.6rem 2.5rem;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .search-box input:focus { border-color: var(--accent); }
-  .search-box .icon {
-    position: absolute;
-    left: 0.8rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--muted);
-    font-size: 0.9rem;
-  }
-  .filter-select {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
+    padding: 0.5rem 1.2rem;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    font-family: 'Roboto', sans-serif;
     font-size: 0.85rem;
-    padding: 0.6rem 0.9rem;
-    outline: none;
+    font-weight: 500;
     cursor: pointer;
+    transition: all 0.15s;
   }
-  .filter-select:focus { border-color: var(--accent); }
 
-  /* TABLE */
-  .table-wrap {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    overflow: hidden;
-  }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.85rem;
-  }
-  thead {
-    background: var(--surface2);
-    border-bottom: 2px solid var(--border);
-  }
-  thead th {
-    padding: 0.85rem 1rem;
-    text-align: left;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    color: var(--muted);
-    font-weight: 600;
-    white-space: nowrap;
-  }
-  tbody tr {
-    border-bottom: 1px solid var(--border);
-    transition: background 0.15s;
-  }
-  tbody tr:hover { background: rgba(255,255,255,0.03); }
-  tbody tr:last-child { border-bottom: none; }
-  td {
-    padding: 0.85rem 1rem;
-    color: var(--text);
-    vertical-align: middle;
-  }
-  td.mono { font-family: 'DM Mono', monospace; font-size: 0.82rem; color: var(--muted); }
+  .btn-primary { background: #2980b9; color: white; border-color: #2980b9; }
+  .btn-primary:hover { background: #1f6fa0; border-color: #1f6fa0; }
 
-  .badge {
-    display: inline-block;
-    padding: 0.2rem 0.65rem;
-    border-radius: 20px;
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-  }
-  .badge-active { background: rgba(232,160,32,0.15); color: var(--accent); border: 1px solid rgba(232,160,32,0.3); }
-  .badge-returned { background: rgba(82,196,122,0.15); color: var(--success); border: 1px solid rgba(82,196,122,0.3); }
-  .badge-late { background: rgba(224,82,82,0.15); color: var(--danger); border: 1px solid rgba(224,82,82,0.3); }
+  .btn-outline { background: white; border-color: #b2bec3; color: #636e72; }
+  .btn-outline:hover { border-color: #2980b9; color: #2980b9; }
 
-  /* DASHBOARD */
+  .btn-success { background: transparent; border-color: #00b894; color: #00b894; padding: 0.35rem 0.75rem; font-size: 0.8rem; }
+  .btn-success:hover { background: #00b894; color: white; }
+
+  .btn-danger { background: transparent; border-color: #e17055; color: #e17055; padding: 0.35rem 0.75rem; font-size: 0.8rem; }
+  .btn-danger:hover { background: #e17055; color: white; }
+
+  .btn-info { background: transparent; border-color: #0984e3; color: #0984e3; padding: 0.35rem 0.75rem; font-size: 0.8rem; }
+  .btn-info:hover { background: #0984e3; color: white; }
+
+  /* STATS GRID */
   .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 1rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
   }
+
   .stat-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.25rem 1.5rem;
-    position: relative;
-    overflow: hidden;
+    background: white;
+    border: 1px solid #dfe6e9;
+    border-left: 4px solid #ccc;
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
   }
-  .stat-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-  }
-  .stat-card.gold::before { background: var(--accent); }
-  .stat-card.green::before { background: var(--success); }
-  .stat-card.red::before { background: var(--danger); }
-  .stat-card.blue::before { background: var(--info); }
+  .stat-card.gold  { border-left-color: #f39c12; }
+  .stat-card.green { border-left-color: #00b894; }
+  .stat-card.red   { border-left-color: #e17055; }
+  .stat-card.blue  { border-left-color: #0984e3; }
+
   .stat-card .label {
     font-size: 0.72rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--muted);
-    margin-bottom: 0.5rem;
-    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: #636e72;
+    font-weight: 500;
+    margin-bottom: 0.35rem;
   }
   .stat-card .value {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.5rem;
-    letter-spacing: 2px;
+    font-size: 2rem;
+    font-weight: 700;
     line-height: 1;
   }
-  .stat-card.gold .value { color: var(--accent); }
-  .stat-card.green .value { color: var(--success); }
-  .stat-card.red .value { color: var(--danger); }
-  .stat-card.blue .value { color: var(--info); }
+  .stat-card.gold .value  { color: #f39c12; }
+  .stat-card.green .value { color: #00b894; }
+  .stat-card.red .value   { color: #e17055; }
+  .stat-card.blue .value  { color: #0984e3; }
+
+  /* FILTERS */
+  .filters {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .search-box { flex: 1; min-width: 220px; position: relative; }
+  .search-box input {
+    width: 100%;
+    background: white;
+    border: 1px solid #b2bec3;
+    border-radius: 4px;
+    color: #2d3436;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.88rem;
+    padding: 0.5rem 0.8rem 0.5rem 2.2rem;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .search-box input:focus { border-color: #2980b9; }
+  .search-box .icon { position: absolute; left: 0.7rem; top: 50%; transform: translateY(-50%); color: #b2bec3; font-size: 0.85rem; }
+
+  .filter-select {
+    background: white;
+    border: 1px solid #b2bec3;
+    border-radius: 4px;
+    color: #2d3436;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.85rem;
+    padding: 0.5rem 0.8rem;
+    outline: none;
+    cursor: pointer;
+  }
+  .filter-select:focus { border-color: #2980b9; }
+
+  /* TABLE */
+  .table-wrap {
+    background: white;
+    border: 1px solid #dfe6e9;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+
+  thead { background: #f8f9fa; }
+  thead th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #636e72;
+    font-weight: 600;
+    border-bottom: 1px solid #dfe6e9;
+    white-space: nowrap;
+  }
+
+  tbody tr { border-bottom: 1px solid #f0f0f0; transition: background 0.1s; }
+  tbody tr:hover { background: #f8f9fa; }
+  tbody tr:last-child { border-bottom: none; }
+
+  td { padding: 0.75rem 1rem; vertical-align: middle; }
+  td.mono { font-family: 'Roboto Mono', monospace; font-size: 0.78rem; color: #636e72; }
+
+  /* BADGES */
+  .badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 3px;
+    font-size: 0.72rem;
+    font-weight: 600;
+  }
+  .badge-active   { background: #ffeaa7; color: #856404; }
+  .badge-returned { background: #d4edda; color: #155724; }
+  .badge-late     { background: #f8d7da; color: #721c24; }
 
   /* EMPTY STATE */
-  .empty {
-    text-align: center;
-    padding: 3rem;
-    color: var(--muted);
-  }
-  .empty .big { font-size: 2.5rem; margin-bottom: 0.5rem; }
+  .empty { text-align: center; padding: 2.5rem; color: #b2bec3; }
+  .empty .big { font-size: 2rem; margin-bottom: 0.4rem; }
+  .empty p { font-size: 0.85rem; }
 
   /* MODAL */
   .modal-overlay {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.7);
+    background: rgba(0,0,0,0.45);
     z-index: 200;
     justify-content: center;
     align-items: center;
-    backdrop-filter: blur(4px);
   }
   .modal-overlay.open { display: flex; }
+
   .modal {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 2rem;
+    background: white;
+    border-radius: 6px;
+    padding: 1.75rem;
     width: 90%;
-    max-width: 560px;
-    animation: fadeUp 0.25s ease;
+    max-width: 500px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
   }
+
   .modal h3 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.4rem;
-    letter-spacing: 2px;
-    color: var(--accent);
-    margin-bottom: 1.25rem;
-  }
-  .modal-details { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem; }
-  .detail-row { display: flex; gap: 1rem; align-items: flex-start; }
-  .detail-row .dlabel {
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--muted);
-    width: 120px;
-    flex-shrink: 0;
+    font-size: 1rem;
     font-weight: 600;
-    padding-top: 2px;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #dfe6e9;
   }
-  .detail-row .dval { font-size: 0.9rem; }
-  .modal-actions { display: flex; gap: 0.75rem; justify-content: flex-end; flex-wrap: wrap; }
+
+  .modal-details { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.25rem; }
+
+  .detail-row { display: flex; gap: 0.75rem; padding: 0.4rem 0; border-bottom: 1px solid #f5f5f5; }
+  .detail-row:last-child { border-bottom: none; }
+  .detail-row .dlabel { font-size: 0.75rem; color: #636e72; font-weight: 500; width: 130px; flex-shrink: 0; }
+  .detail-row .dval   { font-size: 0.88rem; }
+
+  .modal-actions { display: flex; gap: 0.6rem; justify-content: flex-end; flex-wrap: wrap; padding-top: 1rem; border-top: 1px solid #f0f0f0; }
 
   /* TOAST */
   #toast {
     position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    background: var(--surface2);
-    border: 1px solid var(--accent);
-    border-radius: 10px;
-    padding: 0.85rem 1.25rem;
-    font-size: 0.88rem;
-    color: var(--text);
-    transform: translateY(80px);
+    bottom: 1.5rem;
+    right: 1.5rem;
+    background: #2c3e50;
+    color: white;
+    border-radius: 4px;
+    padding: 0.75rem 1.1rem;
+    font-size: 0.85rem;
+    transform: translateY(60px);
     opacity: 0;
-    transition: all 0.3s;
+    transition: all 0.25s ease;
     z-index: 300;
-    max-width: 320px;
+    max-width: 280px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   }
   #toast.show { transform: translateY(0); opacity: 1; }
 
-  /* RESPONSIVE */
   @media (max-width: 640px) {
-    header { height: auto; padding: 1rem; flex-wrap: wrap; }
+    header { height: auto; padding: 0.75rem; flex-wrap: wrap; }
     .container { padding: 1rem; }
     .form-grid { grid-template-columns: 1fr; }
     .stats-grid { grid-template-columns: 1fr 1fr; }
@@ -483,8 +384,8 @@
 
 <header>
   <div class="logo-block">
-    <span class="inst">FIM — UAS</span>
-    <span class="sub">Facultad de Ingeniería Mochis</span>
+    <div class="inst">FIM — UAS</div>
+    <div class="sub">Facultad de Ingeniería Mochis</div>
   </div>
   <div class="header-sep"></div>
   <span class="page-title">Bitácora de Préstamo de Equipos</span>
@@ -499,7 +400,7 @@
   <div class="tabs">
     <button class="tab active" onclick="showTab('dashboard')">📊 Dashboard</button>
     <button class="tab" onclick="showTab('nuevo')">➕ Nuevo Préstamo</button>
-    <button class="tab" onclick="showTab('activos')">📦 Préstamos Activos</button>
+    <button class="tab" onclick="showTab('activos')">📦 Activos</button>
     <button class="tab" onclick="showTab('historial')">📋 Historial</button>
     <button class="tab" onclick="showTab('equipos')">🖥️ Equipos</button>
   </div>
@@ -507,60 +408,29 @@
   <!-- DASHBOARD -->
   <div id="panel-dashboard" class="panel active">
     <div class="stats-grid">
-      <div class="stat-card gold">
-        <div class="label">Total Registros</div>
-        <div class="value" id="stat-total">0</div>
-      </div>
-      <div class="stat-card gold">
-        <div class="label">Préstamos Activos</div>
-        <div class="value" id="stat-activos">0</div>
-      </div>
-      <div class="stat-card green">
-        <div class="label">Devueltos</div>
-        <div class="value" id="stat-devueltos">0</div>
-      </div>
-      <div class="stat-card red">
-        <div class="label">Con Retraso</div>
-        <div class="value" id="stat-retraso">0</div>
-      </div>
-      <div class="stat-card blue">
-        <div class="label">Prestados Hoy</div>
-        <div class="value" id="stat-hoy">0</div>
-      </div>
+      <div class="stat-card gold"><div class="label">Total Registros</div><div class="value" id="stat-total">0</div></div>
+      <div class="stat-card gold"><div class="label">Préstamos Activos</div><div class="value" id="stat-activos">0</div></div>
+      <div class="stat-card green"><div class="label">Devueltos</div><div class="value" id="stat-devueltos">0</div></div>
+      <div class="stat-card red"><div class="label">Con Retraso</div><div class="value" id="stat-retraso">0</div></div>
+      <div class="stat-card blue"><div class="label">Prestados Hoy</div><div class="value" id="stat-hoy">0</div></div>
     </div>
-
     <div class="table-wrap">
       <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Nombre</th>
-            <th>Carrera / Grupo</th>
-            <th>Equipo</th>
-            <th>Fecha Préstamo</th>
-            <th>Tipo</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody id="dash-table-body">
-          <tr><td colspan="8"><div class="empty"><div class="big">📋</div>Sin registros recientes</div></td></tr>
-        </tbody>
+        <thead><tr><th>#</th><th>Nombre</th><th>Carrera / Grupo</th><th>Equipo</th><th>Fecha</th><th>Tipo</th><th>Estado</th><th>Acciones</th></tr></thead>
+        <tbody id="dash-table-body"><tr><td colspan="8"><div class="empty"><div class="big">📋</div><p>Sin registros recientes</p></div></td></tr></tbody>
       </table>
     </div>
   </div>
 
-  <!-- NUEVO PRÉSTAMO -->
+  <!-- NUEVO -->
   <div id="panel-nuevo" class="panel">
-    <div class="form-card">
+    <div class="card">
       <h2>Registrar Nuevo Préstamo</h2>
       <div class="form-grid">
-
         <div class="form-group">
           <label>Nombre completo *</label>
           <input type="text" id="f-nombre" placeholder="Apellidos y nombre">
         </div>
-
         <div class="form-group">
           <label>Carrera *</label>
           <select id="f-carrera">
@@ -574,22 +444,18 @@
             <option>Otra</option>
           </select>
         </div>
-
         <div class="form-group">
           <label>Grupo *</label>
           <input type="text" id="f-grupo" placeholder="Ej. 5A, 3B…">
         </div>
-
         <div class="form-group">
           <label>Semestre</label>
           <select id="f-semestre">
             <option value="">— —</option>
-            <option>1°</option><option>2°</option><option>3°</option>
-            <option>4°</option><option>5°</option><option>6°</option>
-            <option>7°</option><option>8°</option><option>9°</option>
+            <option>1°</option><option>2°</option><option>3°</option><option>4°</option>
+            <option>5°</option><option>6°</option><option>7°</option><option>8°</option><option>9°</option>
           </select>
         </div>
-
         <div class="form-group">
           <label>Tipo de usuario *</label>
           <div class="checkbox-group">
@@ -597,54 +463,43 @@
             <label><input type="radio" name="tipo-usuario" value="Profesor"> Profesor</label>
           </div>
         </div>
-
         <div class="form-group">
           <label>N° de cuenta / Matrícula</label>
           <input type="text" id="f-matricula" placeholder="Número de identificación">
         </div>
-
-        <div class="form-group" style="grid-column: 1 / -1;">
-          <label>Equipo(s) a prestar *</label>
-          <select id="f-equipo">
-            <option value="">— Seleccionar equipo —</option>
-          </select>
+        <div class="form-group" style="grid-column:1/-1">
+          <label>Equipo a prestar *</label>
+          <select id="f-equipo"><option value="">— Seleccionar equipo —</option></select>
         </div>
-
         <div class="form-group">
           <label>Fecha de préstamo *</label>
           <input type="date" id="f-fecha-prestamo">
         </div>
-
         <div class="form-group">
           <label>Hora de préstamo *</label>
           <input type="time" id="f-hora-prestamo">
         </div>
-
         <div class="form-group">
           <label>Fecha de entrega estimada</label>
           <input type="date" id="f-fecha-entrega">
         </div>
-
         <div class="form-group">
           <label>Hora de entrega estimada</label>
           <input type="time" id="f-hora-entrega">
         </div>
-
-        <div class="form-group" style="grid-column: 1 / -1;">
+        <div class="form-group" style="grid-column:1/-1">
           <label>Observaciones</label>
           <textarea id="f-obs" placeholder="Estado del equipo, accesorios incluidos, notas especiales…"></textarea>
         </div>
-
         <div class="form-row">
-          <label style="font-size:0.78rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:1px;">Firma del prestador:</label>
-          <input type="text" id="f-firma-prestador" placeholder="Nombre del encargado" style="flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.9rem;padding:0.6rem 0.9rem;outline:none;">
+          <label style="font-size:0.8rem;color:#636e72;font-weight:500;white-space:nowrap">Firma del encargado:</label>
+          <input type="text" id="f-firma-prestador" placeholder="Nombre del encargado"
+            style="flex:1;border:1px solid #b2bec3;border-radius:4px;padding:0.55rem 0.8rem;font-family:'Roboto',sans-serif;font-size:0.88rem;outline:none;">
         </div>
-
-        <div class="form-row" style="justify-content: flex-end; padding-top: 0.5rem;">
+        <div class="form-row" style="justify-content:flex-end;padding-top:0.25rem">
           <button class="btn btn-outline" onclick="limpiarForm()">Limpiar</button>
           <button class="btn btn-primary" onclick="registrarPrestamo()">📥 Registrar Préstamo</button>
         </div>
-
       </div>
     </div>
   </div>
@@ -662,23 +517,8 @@
     </div>
     <div class="table-wrap">
       <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Nombre</th>
-            <th>Carrera</th>
-            <th>Grupo</th>
-            <th>Tipo</th>
-            <th>Equipo</th>
-            <th>Fecha Préstamo</th>
-            <th>Entrega Est.</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody id="activos-table-body">
-          <tr><td colspan="10"><div class="empty"><div class="big">✅</div>Sin préstamos activos</div></td></tr>
-        </tbody>
+        <thead><tr><th>#</th><th>Nombre</th><th>Carrera</th><th>Grupo</th><th>Tipo</th><th>Equipo</th><th>Fecha Préstamo</th><th>Entrega Est.</th><th>Estado</th><th>Acciones</th></tr></thead>
+        <tbody id="activos-table-body"><tr><td colspan="10"><div class="empty"><div class="big">✅</div><p>Sin préstamos activos</p></div></td></tr></tbody>
       </table>
     </div>
   </div>
@@ -700,30 +540,15 @@
     </div>
     <div class="table-wrap">
       <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Nombre</th>
-            <th>Carrera / Grupo</th>
-            <th>Tipo</th>
-            <th>Equipo</th>
-            <th>Fecha Préstamo</th>
-            <th>Fecha Devolución</th>
-            <th>Estado</th>
-            <th>Encargado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody id="hist-table-body">
-          <tr><td colspan="10"><div class="empty"><div class="big">📋</div>Sin registros</div></td></tr>
-        </tbody>
+        <thead><tr><th>#</th><th>Nombre</th><th>Carrera / Grupo</th><th>Tipo</th><th>Equipo</th><th>Fecha Préstamo</th><th>Fecha Devolución</th><th>Estado</th><th>Encargado</th><th>Acciones</th></tr></thead>
+        <tbody id="hist-table-body"><tr><td colspan="10"><div class="empty"><div class="big">📋</div><p>Sin registros</p></div></td></tr></tbody>
       </table>
     </div>
   </div>
 
   <!-- EQUIPOS -->
   <div id="panel-equipos" class="panel">
-    <div class="form-card">
+    <div class="card">
       <h2>Gestión de Equipos</h2>
       <div class="form-grid">
         <div class="form-group">
@@ -738,51 +563,33 @@
           <label>Categoría</label>
           <select id="eq-cat">
             <option value="">— —</option>
-            <option>Laptop</option>
-            <option>Proyector</option>
-            <option>Cable HDMI</option>
-            <option>Cámara</option>
-            <option>Tablet</option>
-            <option>Otro</option>
+            <option>Laptop</option><option>Proyector</option>
+            <option>Cable HDMI</option><option>Cámara</option>
+            <option>Tablet</option><option>Otro</option>
           </select>
         </div>
         <div class="form-group">
           <label>Estado físico</label>
           <select id="eq-estado">
-            <option>Bueno</option>
-            <option>Regular</option>
-            <option>Deteriorado</option>
+            <option>Bueno</option><option>Regular</option><option>Deteriorado</option>
           </select>
         </div>
-        <div class="form-row" style="justify-content: flex-end;">
+        <div class="form-row" style="justify-content:flex-end">
           <button class="btn btn-primary" onclick="agregarEquipo()">➕ Agregar Equipo</button>
         </div>
       </div>
     </div>
-
     <div class="table-wrap">
       <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Equipo</th>
-            <th>N° Serie</th>
-            <th>Categoría</th>
-            <th>Estado</th>
-            <th>Disponibilidad</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody id="eq-table-body">
-          <tr><td colspan="7"><div class="empty"><div class="big">🖥️</div>Sin equipos registrados</div></td></tr>
-        </tbody>
+        <thead><tr><th>#</th><th>Equipo</th><th>N° Serie</th><th>Categoría</th><th>Estado</th><th>Disponibilidad</th><th>Acciones</th></tr></thead>
+        <tbody id="eq-table-body"><tr><td colspan="7"><div class="empty"><div class="big">🖥️</div><p>Sin equipos registrados</p></div></td></tr></tbody>
       </table>
     </div>
   </div>
 
-</div><!-- /container -->
+</div>
 
-<!-- MODAL DETALLE / DEVOLUCIÓN -->
+<!-- MODAL -->
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal">
     <h3 id="modal-title">Detalle del Préstamo</h3>
@@ -791,400 +598,274 @@
   </div>
 </div>
 
-<!-- TOAST -->
 <div id="toast"></div>
 
 <script>
-// ===== STATE =====
 let prestamos = JSON.parse(localStorage.getItem('fim_prestamos') || '[]');
-let equipos = JSON.parse(localStorage.getItem('fim_equipos') || '[]');
+let equipos   = JSON.parse(localStorage.getItem('fim_equipos')   || '[]');
 let modalTarget = null;
 
-// ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
-  // Default date/time
   const now = new Date();
   document.getElementById('f-fecha-prestamo').value = now.toISOString().split('T')[0];
-  document.getElementById('f-hora-prestamo').value = now.toTimeString().slice(0,5);
-
-  // Seed some demo equipment if empty
+  document.getElementById('f-hora-prestamo').value  = now.toTimeString().slice(0,5);
   if (equipos.length === 0) {
     equipos = [
-      { id: 'E001', nombre: 'Laptop HP 14 — #001', serie: 'HP-001', cat: 'Laptop', estado: 'Bueno', disponible: true },
-      { id: 'E002', nombre: 'Proyector Epson S41+ — #001', serie: 'EP-S41-01', cat: 'Proyector', estado: 'Bueno', disponible: true },
-      { id: 'E003', nombre: 'Cable HDMI 3m — #001', serie: 'HDMI-001', cat: 'Cable HDMI', estado: 'Bueno', disponible: true },
+      { id:'E001', nombre:'Laptop HP 14 — #001',        serie:'HP-001',    cat:'Laptop',     estado:'Bueno', disponible:true },
+      { id:'E002', nombre:'Proyector Epson S41+ — #001', serie:'EP-S41-01', cat:'Proyector',  estado:'Bueno', disponible:true },
+      { id:'E003', nombre:'Cable HDMI 3m — #001',        serie:'HDMI-001',  cat:'Cable HDMI', estado:'Bueno', disponible:true },
     ];
     saveEquipos();
   }
-
-  renderAll();
-  populateEquiposSelect();
-  populateCarreraFilters();
+  renderAll(); populateEquiposSelect(); populateCarreraFilters();
 });
 
-function saveAll() {
-  localStorage.setItem('fim_prestamos', JSON.stringify(prestamos));
-  localStorage.setItem('fim_equipos', JSON.stringify(equipos));
-}
-function saveEquipos() { localStorage.setItem('fim_equipos', JSON.stringify(equipos)); }
+function saveAll()    { localStorage.setItem('fim_prestamos', JSON.stringify(prestamos)); saveEquipos(); }
+function saveEquipos(){ localStorage.setItem('fim_equipos',   JSON.stringify(equipos)); }
 
-// ===== TABS =====
 function showTab(id) {
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('panel-' + id).classList.add('active');
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
   event.target.classList.add('active');
   renderAll();
 }
 
-// ===== RENDER ALL =====
 function renderAll() {
-  renderDashboard();
-  renderActivos();
-  renderHistorial();
-  renderEquipos();
-  updateHeaderStats();
-  populateCarreraFilters();
+  renderDashboard(); renderActivos(); renderHistorial();
+  renderEquipos(); updateHeaderStats(); populateCarreraFilters();
 }
 
-// ===== DASHBOARD =====
 function renderDashboard() {
-  const total = prestamos.length;
-  const activos = prestamos.filter(p => p.estado === 'Activo').length;
-  const devueltos = prestamos.filter(p => p.estado === 'Devuelto').length;
   const today = new Date().toISOString().split('T')[0];
-  const retraso = prestamos.filter(p => p.estado === 'Activo' && p.fechaEntrega && p.fechaEntrega < today).length;
-  const hoy = prestamos.filter(p => p.fechaPrestamo === today).length;
-
-  document.getElementById('stat-total').textContent = total;
-  document.getElementById('stat-activos').textContent = activos;
-  document.getElementById('stat-devueltos').textContent = devueltos;
-  document.getElementById('stat-retraso').textContent = retraso;
-  document.getElementById('stat-hoy').textContent = hoy;
-
-  const recent = [...prestamos].reverse().slice(0, 10);
-  const tbody = document.getElementById('dash-table-body');
-  tbody.innerHTML = recent.length ? recent.map((p, i) => rowDash(p, i+1)).join('') :
-    '<tr><td colspan="8"><div class="empty"><div class="big">📋</div>Sin registros</div></td></tr>';
+  document.getElementById('stat-total').textContent     = prestamos.length;
+  document.getElementById('stat-activos').textContent   = prestamos.filter(p=>p.estado==='Activo').length;
+  document.getElementById('stat-devueltos').textContent = prestamos.filter(p=>p.estado==='Devuelto').length;
+  document.getElementById('stat-retraso').textContent   = prestamos.filter(p=>p.estado==='Activo'&&p.fechaEntrega&&p.fechaEntrega<today).length;
+  document.getElementById('stat-hoy').textContent       = prestamos.filter(p=>p.fechaPrestamo===today).length;
+  const recent = [...prestamos].reverse().slice(0,10);
+  document.getElementById('dash-table-body').innerHTML = recent.length
+    ? recent.map(p=>`<tr>
+        <td class="mono">${String(p.id).padStart(4,'0')}</td>
+        <td><strong>${p.nombre}</strong></td>
+        <td>${(p.carrera||'').split(' ').slice(-1)[0]||'—'} / ${p.grupo||'—'}</td>
+        <td>${p.equipo}</td>
+        <td class="mono">${p.fechaPrestamo}</td>
+        <td>${p.tipoUsuario}</td>
+        <td>${badgeEstado(p)}</td>
+        <td><button class="btn btn-info" onclick="openModal(${p.id})">Ver</button></td>
+      </tr>`).join('')
+    : '<tr><td colspan="8"><div class="empty"><div class="big">📋</div><p>Sin registros recientes</p></div></td></tr>';
 }
 
-function rowDash(p, i) {
-  return `<tr>
-    <td class="mono">${String(p.id).padStart(4,'0')}</td>
-    <td><strong>${p.nombre}</strong></td>
-    <td>${p.carrera ? p.carrera.split(' ').slice(-1)[0] : '—'} / ${p.grupo || '—'}</td>
-    <td>${p.equipo}</td>
-    <td class="mono">${p.fechaPrestamo}</td>
-    <td>${p.tipoUsuario}</td>
-    <td>${badgeEstado(p)}</td>
-    <td><button class="btn btn-info" onclick="openModal(${p.id})">Ver</button></td>
-  </tr>`;
-}
-
-// ===== ACTIVOS =====
 function renderActivos() {
-  const q = (document.getElementById('search-activos')?.value || '').toLowerCase();
-  const carr = document.getElementById('filter-carrera-a')?.value || '';
-  const today = new Date().toISOString().split('T')[0];
-
-  let data = prestamos.filter(p => {
-    if (p.estado !== 'Activo') return false;
-    const match = !q || [p.nombre, p.equipo, p.grupo, p.carrera].join(' ').toLowerCase().includes(q);
-    const matchC = !carr || p.carrera === carr;
-    return match && matchC;
-  });
-
-  const tbody = document.getElementById('activos-table-body');
-  tbody.innerHTML = data.length ? data.map(p => rowActivo(p, today)).join('') :
-    '<tr><td colspan="10"><div class="empty"><div class="big">✅</div>Sin préstamos activos</div></td></tr>';
+  const q=document.getElementById('search-activos')?.value.toLowerCase()||'';
+  const carr=document.getElementById('filter-carrera-a')?.value||'';
+  const today=new Date().toISOString().split('T')[0];
+  const data=prestamos.filter(p=>p.estado==='Activo'
+    &&(!q||[p.nombre,p.equipo,p.grupo,p.carrera].join(' ').toLowerCase().includes(q))
+    &&(!carr||p.carrera===carr));
+  document.getElementById('activos-table-body').innerHTML = data.length
+    ? data.map(p=>{ const late=p.fechaEntrega&&p.fechaEntrega<today; return `<tr>
+        <td class="mono">${String(p.id).padStart(4,'0')}</td>
+        <td><strong>${p.nombre}</strong><br><small style="color:#636e72">${p.matricula||''}</small></td>
+        <td style="font-size:0.82rem">${p.carrera||'—'}</td>
+        <td>${p.grupo||'—'}</td><td>${p.tipoUsuario}</td><td>${p.equipo}</td>
+        <td class="mono">${p.fechaPrestamo} ${p.horaPrestamo}</td>
+        <td class="mono" style="color:${late?'#e17055':'inherit'}">${p.fechaEntrega||'—'} ${p.horaEntrega||''}</td>
+        <td>${late?'<span class="badge badge-late">⚠ Retraso</span>':'<span class="badge badge-active">Activo</span>'}</td>
+        <td style="display:flex;gap:0.4rem;flex-wrap:wrap">
+          <button class="btn btn-success" onclick="devolverPrestamo(${p.id})">↩ Devolver</button>
+          <button class="btn btn-info" onclick="openModal(${p.id})">Ver</button>
+        </td></tr>`; }).join('')
+    : '<tr><td colspan="10"><div class="empty"><div class="big">✅</div><p>Sin préstamos activos</p></div></td></tr>';
 }
 
-function rowActivo(p, today) {
-  const late = p.fechaEntrega && p.fechaEntrega < today;
-  return `<tr>
-    <td class="mono">${String(p.id).padStart(4,'0')}</td>
-    <td><strong>${p.nombre}</strong><br><small style="color:var(--muted)">${p.matricula || ''}</small></td>
-    <td style="font-size:0.8rem">${p.carrera || '—'}</td>
-    <td>${p.grupo || '—'}</td>
-    <td>${p.tipoUsuario}</td>
-    <td>${p.equipo}</td>
-    <td class="mono">${p.fechaPrestamo} ${p.horaPrestamo}</td>
-    <td class="mono" style="color:${late?'var(--danger)':'inherit'}">${p.fechaEntrega || '—'} ${p.horaEntrega || ''}</td>
-    <td>${late ? '<span class="badge badge-late">⚠️ Retraso</span>' : '<span class="badge badge-active">Activo</span>'}</td>
-    <td style="display:flex;gap:0.4rem;flex-wrap:wrap">
-      <button class="btn btn-success" onclick="devolverPrestamo(${p.id})">↩ Devolver</button>
-      <button class="btn btn-info" onclick="openModal(${p.id})">Ver</button>
-    </td>
-  </tr>`;
-}
-
-// ===== HISTORIAL =====
 function renderHistorial() {
-  const q = (document.getElementById('search-hist')?.value || '').toLowerCase();
-  const est = document.getElementById('filter-estado-h')?.value || '';
-  const today = new Date().toISOString().split('T')[0];
-
-  let data = [...prestamos].reverse().filter(p => {
-    const match = !q || [p.nombre, p.equipo, p.grupo, p.carrera].join(' ').toLowerCase().includes(q);
-    let estMatch = true;
-    if (est === 'Activo') estMatch = p.estado === 'Activo' && (!p.fechaEntrega || p.fechaEntrega >= today);
-    else if (est === 'Devuelto') estMatch = p.estado === 'Devuelto';
-    else if (est === 'Retraso') estMatch = p.estado === 'Activo' && p.fechaEntrega && p.fechaEntrega < today;
-    return match && estMatch;
+  const q=document.getElementById('search-hist')?.value.toLowerCase()||'';
+  const est=document.getElementById('filter-estado-h')?.value||'';
+  const today=new Date().toISOString().split('T')[0];
+  const data=[...prestamos].reverse().filter(p=>{
+    const match=!q||[p.nombre,p.equipo,p.grupo,p.carrera].join(' ').toLowerCase().includes(q);
+    let em=true;
+    if(est==='Activo') em=p.estado==='Activo'&&(!p.fechaEntrega||p.fechaEntrega>=today);
+    if(est==='Devuelto') em=p.estado==='Devuelto';
+    if(est==='Retraso') em=p.estado==='Activo'&&p.fechaEntrega&&p.fechaEntrega<today;
+    return match&&em;
   });
-
-  const tbody = document.getElementById('hist-table-body');
-  tbody.innerHTML = data.length ? data.map(p => rowHistorial(p)).join('') :
-    '<tr><td colspan="10"><div class="empty"><div class="big">📋</div>Sin registros</div></td></tr>';
+  document.getElementById('hist-table-body').innerHTML = data.length
+    ? data.map(p=>`<tr>
+        <td class="mono">${String(p.id).padStart(4,'0')}</td>
+        <td>${p.nombre}</td>
+        <td style="font-size:0.82rem">${(p.carrera||'').split(' ').slice(-1)[0]||'—'} / ${p.grupo||'—'}</td>
+        <td>${p.tipoUsuario}</td><td>${p.equipo}</td>
+        <td class="mono">${p.fechaPrestamo} ${p.horaPrestamo}</td>
+        <td class="mono">${p.fechaDevolucion?p.fechaDevolucion+' '+(p.horaDevolucion||''):'—'}</td>
+        <td>${badgeEstado(p)}</td>
+        <td style="font-size:0.82rem">${p.firmaPrestador||'—'}</td>
+        <td style="display:flex;gap:0.4rem">
+          <button class="btn btn-info" onclick="openModal(${p.id})">Ver</button>
+          ${p.estado==='Activo'?`<button class="btn btn-success" onclick="devolverPrestamo(${p.id})">↩</button>`:''}
+        </td></tr>`).join('')
+    : '<tr><td colspan="10"><div class="empty"><div class="big">📋</div><p>Sin registros</p></div></td></tr>';
 }
 
-function rowHistorial(p) {
-  return `<tr>
-    <td class="mono">${String(p.id).padStart(4,'0')}</td>
-    <td>${p.nombre}</td>
-    <td style="font-size:0.8rem">${(p.carrera||'').split(' ').slice(-1)[0] || '—'} / ${p.grupo||'—'}</td>
-    <td>${p.tipoUsuario}</td>
-    <td>${p.equipo}</td>
-    <td class="mono">${p.fechaPrestamo} ${p.horaPrestamo}</td>
-    <td class="mono">${p.fechaDevolucion ? p.fechaDevolucion + ' ' + (p.horaDevolucion||'') : '—'}</td>
-    <td>${badgeEstado(p)}</td>
-    <td style="font-size:0.8rem">${p.firmaPrestador||'—'}</td>
-    <td style="display:flex;gap:0.4rem">
-      <button class="btn btn-info" onclick="openModal(${p.id})">Ver</button>
-      ${p.estado==='Activo' ? `<button class="btn btn-success" onclick="devolverPrestamo(${p.id})">↩</button>` : ''}
-    </td>
-  </tr>`;
-}
-
-// ===== EQUIPOS =====
 function renderEquipos() {
-  const tbody = document.getElementById('eq-table-body');
-  tbody.innerHTML = equipos.length ? equipos.map((e,i) => `<tr>
-    <td class="mono">${e.id}</td>
-    <td>${e.nombre}</td>
-    <td class="mono">${e.serie||'—'}</td>
-    <td>${e.cat||'—'}</td>
-    <td>${e.estado}</td>
-    <td>${e.disponible ? '<span class="badge badge-returned">Disponible</span>' : '<span class="badge badge-active">En préstamo</span>'}</td>
-    <td><button class="btn btn-danger" onclick="eliminarEquipo('${e.id}')">🗑</button></td>
-  </tr>`).join('') :
-    '<tr><td colspan="7"><div class="empty"><div class="big">🖥️</div>Sin equipos registrados</div></td></tr>';
+  document.getElementById('eq-table-body').innerHTML = equipos.length
+    ? equipos.map(e=>`<tr>
+        <td class="mono">${e.id}</td><td>${e.nombre}</td>
+        <td class="mono">${e.serie||'—'}</td><td>${e.cat||'—'}</td><td>${e.estado}</td>
+        <td>${e.disponible?'<span class="badge badge-returned">Disponible</span>':'<span class="badge badge-active">En préstamo</span>'}</td>
+        <td><button class="btn btn-danger" onclick="eliminarEquipo(\'${e.id}\')">🗑</button></td>
+      </tr>`).join('')
+    : '<tr><td colspan="7"><div class="empty"><div class="big">🖥️</div><p>Sin equipos registrados</p></div></td></tr>';
 }
 
 function agregarEquipo() {
-  const nombre = document.getElementById('eq-nombre').value.trim();
-  if (!nombre) { showToast('⚠️ Ingresa el nombre del equipo'); return; }
-  const id = 'E' + String(equipos.length + 1).padStart(3,'0');
-  equipos.push({
-    id,
-    nombre,
-    serie: document.getElementById('eq-serie').value.trim(),
-    cat: document.getElementById('eq-cat').value,
-    estado: document.getElementById('eq-estado').value,
-    disponible: true
-  });
+  const nombre=document.getElementById('eq-nombre').value.trim();
+  if(!nombre){showToast('⚠️ Ingresa el nombre del equipo');return;}
+  const id='E'+String(equipos.length+1).padStart(3,'0');
+  equipos.push({id,nombre,serie:document.getElementById('eq-serie').value.trim(),
+    cat:document.getElementById('eq-cat').value,estado:document.getElementById('eq-estado').value,disponible:true});
   saveEquipos();
-  document.getElementById('eq-nombre').value = '';
-  document.getElementById('eq-serie').value = '';
-  populateEquiposSelect();
-  renderEquipos();
-  showToast('✅ Equipo agregado');
+  document.getElementById('eq-nombre').value='';
+  document.getElementById('eq-serie').value='';
+  populateEquiposSelect();renderEquipos();showToast('✅ Equipo agregado');
 }
 
-function eliminarEquipo(id) {
-  if (!confirm('¿Eliminar este equipo?')) return;
-  equipos = equipos.filter(e => e.id !== id);
-  saveEquipos();
-  populateEquiposSelect();
-  renderEquipos();
-  showToast('🗑️ Equipo eliminado');
+function eliminarEquipo(id){
+  if(!confirm('¿Eliminar este equipo?'))return;
+  equipos=equipos.filter(e=>e.id!==id);
+  saveEquipos();populateEquiposSelect();renderEquipos();showToast('🗑️ Equipo eliminado');
 }
 
-function populateEquiposSelect() {
-  const sel = document.getElementById('f-equipo');
-  sel.innerHTML = '<option value="">— Seleccionar equipo —</option>';
-  equipos.filter(e => e.disponible).forEach(e => {
-    sel.innerHTML += `<option value="${e.nombre} (${e.id})">${e.nombre} (${e.id})</option>`;
+function populateEquiposSelect(){
+  const sel=document.getElementById('f-equipo');
+  sel.innerHTML='<option value="">— Seleccionar equipo —</option>';
+  equipos.filter(e=>e.disponible).forEach(e=>{
+    sel.innerHTML+=`<option value="${e.nombre} (${e.id})">${e.nombre} (${e.id})</option>`;
   });
 }
 
-// ===== REGISTRAR PRÉSTAMO =====
-function registrarPrestamo() {
-  const nombre = document.getElementById('f-nombre').value.trim();
-  const carrera = document.getElementById('f-carrera').value;
-  const grupo = document.getElementById('f-grupo').value.trim();
-  const equipo = document.getElementById('f-equipo').value;
-  const fechaPrestamo = document.getElementById('f-fecha-prestamo').value;
-  const horaPrestamo = document.getElementById('f-hora-prestamo').value;
-  const tipoUsuario = document.querySelector('input[name="tipo-usuario"]:checked')?.value || 'Alumno';
-
-  if (!nombre || !carrera || !grupo || !equipo || !fechaPrestamo) {
-    showToast('⚠️ Completa los campos obligatorios (*)');
-    return;
-  }
-
-  const id = prestamos.length ? Math.max(...prestamos.map(p=>p.id)) + 1 : 1;
-
-  // Mark equipment as unavailable
-  const eqId = equipo.match(/\(([^)]+)\)/)?.[1];
-  if (eqId) {
-    const eq = equipos.find(e => e.id === eqId);
-    if (eq) eq.disponible = false;
-    saveEquipos();
-  }
-
-  prestamos.push({
-    id,
-    nombre,
-    carrera,
-    grupo,
-    semestre: document.getElementById('f-semestre').value,
-    matricula: document.getElementById('f-matricula').value.trim(),
-    tipoUsuario,
-    equipo,
-    eqId: eqId || null,
-    fechaPrestamo,
-    horaPrestamo,
-    fechaEntrega: document.getElementById('f-fecha-entrega').value,
-    horaEntrega: document.getElementById('f-hora-entrega').value,
-    obs: document.getElementById('f-obs').value.trim(),
-    firmaPrestador: document.getElementById('f-firma-prestador').value.trim(),
-    estado: 'Activo',
-    fechaDevolucion: null,
-    horaDevolucion: null,
-  });
-
-  saveAll();
-  limpiarForm();
-  populateEquiposSelect();
-  renderAll();
+function registrarPrestamo(){
+  const nombre=document.getElementById('f-nombre').value.trim();
+  const carrera=document.getElementById('f-carrera').value;
+  const grupo=document.getElementById('f-grupo').value.trim();
+  const equipo=document.getElementById('f-equipo').value;
+  const fechaPrestamo=document.getElementById('f-fecha-prestamo').value;
+  const horaPrestamo=document.getElementById('f-hora-prestamo').value;
+  const tipoUsuario=document.querySelector('input[name="tipo-usuario"]:checked')?.value||'Alumno';
+  if(!nombre||!carrera||!grupo||!equipo||!fechaPrestamo){showToast('⚠️ Completa los campos obligatorios (*)');return;}
+  const id=prestamos.length?Math.max(...prestamos.map(p=>p.id))+1:1;
+  const eqId=equipo.match(/\(([^)]+)\)/)?.[1];
+  if(eqId){const eq=equipos.find(e=>e.id===eqId);if(eq)eq.disponible=false;saveEquipos();}
+  prestamos.push({id,nombre,carrera,grupo,
+    semestre:document.getElementById('f-semestre').value,
+    matricula:document.getElementById('f-matricula').value.trim(),
+    tipoUsuario,equipo,eqId:eqId||null,fechaPrestamo,horaPrestamo,
+    fechaEntrega:document.getElementById('f-fecha-entrega').value,
+    horaEntrega:document.getElementById('f-hora-entrega').value,
+    obs:document.getElementById('f-obs').value.trim(),
+    firmaPrestador:document.getElementById('f-firma-prestador').value.trim(),
+    estado:'Activo',fechaDevolucion:null,horaDevolucion:null});
+  saveAll();limpiarForm();populateEquiposSelect();renderAll();
   showToast(`✅ Préstamo registrado para ${nombre}`);
 }
 
-// ===== DEVOLVER =====
-function devolverPrestamo(id) {
-  const p = prestamos.find(x => x.id === id);
-  if (!p) return;
-
-  const now = new Date();
-  p.estado = 'Devuelto';
-  p.fechaDevolucion = now.toISOString().split('T')[0];
-  p.horaDevolucion = now.toTimeString().slice(0,5);
-
-  if (p.eqId) {
-    const eq = equipos.find(e => e.id === p.eqId);
-    if (eq) eq.disponible = true;
-    saveEquipos();
-  }
-
-  saveAll();
-  populateEquiposSelect();
-  renderAll();
-  closeModal();
+function devolverPrestamo(id){
+  const p=prestamos.find(x=>x.id===id);if(!p)return;
+  const now=new Date();
+  p.estado='Devuelto';
+  p.fechaDevolucion=now.toISOString().split('T')[0];
+  p.horaDevolucion=now.toTimeString().slice(0,5);
+  if(p.eqId){const eq=equipos.find(e=>e.id===p.eqId);if(eq)eq.disponible=true;saveEquipos();}
+  saveAll();populateEquiposSelect();renderAll();closeModal();
   showToast(`↩ Equipo devuelto — ${p.equipo}`);
 }
 
-// ===== MODAL =====
-function openModal(id) {
-  const p = prestamos.find(x => x.id === id);
-  if (!p) return;
-  modalTarget = p.id;
-  const today = new Date().toISOString().split('T')[0];
-  const late = p.estado === 'Activo' && p.fechaEntrega && p.fechaEntrega < today;
-
-  document.getElementById('modal-title').textContent = `Préstamo #${String(p.id).padStart(4,'0')}`;
-  document.getElementById('modal-body').innerHTML = `
-    ${row('Nombre', `<strong>${p.nombre}</strong>`)}
-    ${row('Carrera', p.carrera || '—')}
-    ${row('Grupo / Semestre', `${p.grupo || '—'} / ${p.semestre || '—'}`)}
-    ${row('Matrícula', p.matricula || '—')}
-    ${row('Tipo de usuario', p.tipoUsuario)}
-    ${row('Equipo', p.equipo)}
-    ${row('Fecha de préstamo', `${p.fechaPrestamo} ${p.horaPrestamo}`)}
-    ${row('Entrega estimada', p.fechaEntrega ? `${p.fechaEntrega} ${p.horaEntrega}` : '—')}
-    ${row('Estado', badgeEstado(p) + (late ? ' <span style="color:var(--danger);font-size:0.8rem">⚠️ Fuera de tiempo</span>' : ''))}
-    ${p.estado === 'Devuelto' ? row('Fecha devolución', `${p.fechaDevolucion} ${p.horaDevolucion}`) : ''}
-    ${row('Encargado', p.firmaPrestador || '—')}
-    ${p.obs ? row('Observaciones', p.obs) : ''}
-  `;
-  document.getElementById('modal-actions').innerHTML = `
-    ${p.estado === 'Activo' ? `<button class="btn btn-success" onclick="devolverPrestamo(${p.id})">↩ Registrar Devolución</button>` : ''}
-    <button class="btn btn-outline" onclick="closeModal()">Cerrar</button>
-  `;
+function openModal(id){
+  const p=prestamos.find(x=>x.id===id);if(!p)return;
+  modalTarget=p.id;
+  const today=new Date().toISOString().split('T')[0];
+  const late=p.estado==='Activo'&&p.fechaEntrega&&p.fechaEntrega<today;
+  document.getElementById('modal-title').textContent=`Préstamo #${String(p.id).padStart(4,'0')}`;
+  document.getElementById('modal-body').innerHTML=[
+    row('Nombre',`<strong>${p.nombre}</strong>`),
+    row('Carrera',p.carrera||'—'),
+    row('Grupo / Semestre',`${p.grupo||'—'} / ${p.semestre||'—'}`),
+    row('Matrícula',p.matricula||'—'),
+    row('Tipo',p.tipoUsuario),
+    row('Equipo',p.equipo),
+    row('Fecha préstamo',`${p.fechaPrestamo} ${p.horaPrestamo}`),
+    row('Entrega estimada',p.fechaEntrega?`${p.fechaEntrega} ${p.horaEntrega}`:'—'),
+    row('Estado',badgeEstado(p)+(late?' <span style="color:#e17055;font-size:0.78rem">⚠ Fuera de tiempo</span>':'')),
+    p.estado==='Devuelto'?row('Fecha devolución',`${p.fechaDevolucion} ${p.horaDevolucion}`):'',
+    row('Encargado',p.firmaPrestador||'—'),
+    p.obs?row('Observaciones',p.obs):'',
+  ].join('');
+  document.getElementById('modal-actions').innerHTML=
+    (p.estado==='Activo'?`<button class="btn btn-success" onclick="devolverPrestamo(${p.id})">↩ Registrar Devolución</button>`:'')
+    +`<button class="btn btn-outline" onclick="closeModal()">Cerrar</button>`;
   document.getElementById('modal-overlay').classList.add('open');
 }
-function row(label, val) {
-  return `<div class="detail-row"><span class="dlabel">${label}</span><span class="dval">${val}</span></div>`;
-}
-function closeModal() {
-  document.getElementById('modal-overlay').classList.remove('open');
-  modalTarget = null;
-}
-document.getElementById('modal-overlay').addEventListener('click', e => {
-  if (e.target === e.currentTarget) closeModal();
-});
 
-// ===== HELPERS =====
-function badgeEstado(p) {
-  const today = new Date().toISOString().split('T')[0];
-  if (p.estado === 'Devuelto') return '<span class="badge badge-returned">Devuelto</span>';
-  if (p.fechaEntrega && p.fechaEntrega < today) return '<span class="badge badge-late">Retraso</span>';
-  return '<span class="badge badge-active">Activo</span>';
+function row(label,val){return `<div class="detail-row"><span class="dlabel">${label}</span><span class="dval">${val}</span></div>`;}
+function closeModal(){document.getElementById('modal-overlay').classList.remove('open');modalTarget=null;}
+document.getElementById('modal-overlay').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal();});
+
+function badgeEstado(p){
+  const today=new Date().toISOString().split('T')[0];
+  if(p.estado==='Devuelto')return'<span class="badge badge-returned">Devuelto</span>';
+  if(p.fechaEntrega&&p.fechaEntrega<today)return'<span class="badge badge-late">Retraso</span>';
+  return'<span class="badge badge-active">Activo</span>';
 }
 
-function updateHeaderStats() {
-  const activos = prestamos.filter(p => p.estado === 'Activo').length;
-  const today = new Date().toISOString().split('T')[0];
-  const hoy = prestamos.filter(p => p.fechaPrestamo === today).length;
-  document.getElementById('hdr-activos').textContent = `${activos} activos`;
-  document.getElementById('hdr-hoy').textContent = `${hoy} hoy`;
+function updateHeaderStats(){
+  const activos=prestamos.filter(p=>p.estado==='Activo').length;
+  const today=new Date().toISOString().split('T')[0];
+  const hoy=prestamos.filter(p=>p.fechaPrestamo===today).length;
+  document.getElementById('hdr-activos').textContent=`${activos} activos`;
+  document.getElementById('hdr-hoy').textContent=`${hoy} hoy`;
 }
 
-function populateCarreraFilters() {
-  const carreras = [...new Set(prestamos.map(p => p.carrera).filter(Boolean))];
-  ['filter-carrera-a'].forEach(id => {
-    const sel = document.getElementById(id);
-    if (!sel) return;
-    const cur = sel.value;
-    sel.innerHTML = '<option value="">Todas las carreras</option>';
-    carreras.forEach(c => sel.innerHTML += `<option value="${c}"${c===cur?' selected':''}>${c}</option>`);
+function populateCarreraFilters(){
+  const carreras=[...new Set(prestamos.map(p=>p.carrera).filter(Boolean))];
+  const sel=document.getElementById('filter-carrera-a');if(!sel)return;
+  const cur=sel.value;
+  sel.innerHTML='<option value="">Todas las carreras</option>';
+  carreras.forEach(c=>sel.innerHTML+=`<option value="${c}"${c===cur?' selected':''}>${c}</option>`);
+}
+
+function limpiarForm(){
+  ['f-nombre','f-grupo','f-matricula','f-obs','f-firma-prestador','f-fecha-entrega','f-hora-entrega'].forEach(id=>{
+    document.getElementById(id).value='';
   });
+  document.getElementById('f-carrera').value='';
+  document.getElementById('f-semestre').value='';
+  document.getElementById('f-equipo').value='';
+  document.querySelector('input[name="tipo-usuario"][value="Alumno"]').checked=true;
+  const now=new Date();
+  document.getElementById('f-fecha-prestamo').value=now.toISOString().split('T')[0];
+  document.getElementById('f-hora-prestamo').value=now.toTimeString().slice(0,5);
 }
 
-function limpiarForm() {
-  ['f-nombre','f-grupo','f-matricula','f-obs','f-firma-prestador','f-fecha-entrega','f-hora-entrega'].forEach(id => {
-    document.getElementById(id).value = '';
-  });
-  document.getElementById('f-carrera').value = '';
-  document.getElementById('f-semestre').value = '';
-  document.getElementById('f-equipo').value = '';
-  document.querySelector('input[name="tipo-usuario"][value="Alumno"]').checked = true;
-  const now = new Date();
-  document.getElementById('f-fecha-prestamo').value = now.toISOString().split('T')[0];
-  document.getElementById('f-hora-prestamo').value = now.toTimeString().slice(0,5);
+function exportarCSV(){
+  const headers=['ID','Nombre','Carrera','Grupo','Semestre','Matrícula','Tipo','Equipo',
+    'Fecha Préstamo','Hora','Fecha Entrega Est.','Estado','Fecha Devolución','Encargado','Observaciones'];
+  const rows=prestamos.map(p=>[p.id,p.nombre,p.carrera,p.grupo,p.semestre,p.matricula,
+    p.tipoUsuario,p.equipo,p.fechaPrestamo,p.horaPrestamo,p.fechaEntrega,p.estado,
+    p.fechaDevolucion||'',p.firmaPrestador,p.obs].map(v=>`"${(v||'').toString().replace(/"/g,'""')}"`).join(','));
+  const csv=[headers.join(','),...rows].join('\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download=`prestamos_FIM_${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();showToast('⬇️ CSV exportado');
 }
 
-function exportarCSV() {
-  const headers = ['ID','Nombre','Carrera','Grupo','Semestre','Matrícula','Tipo','Equipo','Fecha Préstamo','Hora','Fecha Entrega Est.','Estado','Fecha Devolución','Encargado','Observaciones'];
-  const rows = prestamos.map(p => [
-    p.id, p.nombre, p.carrera, p.grupo, p.semestre, p.matricula, p.tipoUsuario,
-    p.equipo, p.fechaPrestamo, p.horaPrestamo, p.fechaEntrega, p.estado,
-    p.fechaDevolucion||'', p.firmaPrestador, p.obs
-  ].map(v => `"${(v||'').toString().replace(/"/g,'""')}"`).join(','));
-
-  const csv = [headers.join(','), ...rows].join('\n');
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([csv], {type:'text/csv'}));
-  a.download = `prestamos_FIM_${new Date().toISOString().split('T')[0]}.csv`;
-  a.click();
-  showToast('⬇️ CSV exportado');
-}
-
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
 }
 </script>
 </body>
